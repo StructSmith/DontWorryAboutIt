@@ -40,6 +40,7 @@ h1 {
 }
 
 #app {
+  overflow: hidden;
   max-width: 500px;
   width: 100%;
   margin: 0 auto;
@@ -54,6 +55,7 @@ h1 {
   flex: 1;
   display: flex;
   align-items: center;
+  transition: transform 0.4s ease-in-out;
 }
 
 .letter-container {
@@ -82,6 +84,10 @@ h1 {
   font-weight: bold;
 }
 
+.letter.locked {
+  background-color: var(--border);
+}
+
 .letter.crown-letter {
   box-sizing: border-box;
   position: absolute;
@@ -90,7 +96,7 @@ h1 {
   right: -61px;
 }
 
-.letter.hidden {
+.hidden {
   display: none;
 }
 
@@ -155,6 +161,11 @@ h1 {
   font-size: 2rem;
   font-weight: bold;
   color: var(--accent-yellow);
+  margin-top: -10px;
+}
+
+.make-room-for-the-goat {
+  transform: translateX(-30px);
 }
 
 .flying-text {

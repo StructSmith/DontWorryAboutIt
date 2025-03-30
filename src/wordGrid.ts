@@ -2,7 +2,7 @@ import config from "./config";
 
 export const newCrown = () => {
 	const crown = document.createElement("div");
-	crown.classList.add("crown");
+	crown.classList.add("crown", "hidden");
 
 	for (let i = 0; i < 5; i++) {
 		const point = document.createElement("div");
@@ -30,9 +30,11 @@ export const newWordGrid = (size: number): [HTMLDivElement, HTMLDivElement[][]] 
 		}
 		const hiddenCrownDiv = document.createElement("div");
 		hiddenCrownDiv.classList.add("hidden", "letter", "crown-letter");
-		hiddenCrownDiv.appendChild(newCrown());
 		letterCellRows[i].push(hiddenCrownDiv);
 		row.appendChild(hiddenCrownDiv)
+		const crown = newCrown();
+		row.appendChild(crown);
+		letterCellRows[i].push(crown)
 
 		container.appendChild(row);
 	}

@@ -23,12 +23,27 @@ const onWin = () => {
   }
 }
 
+const addCrown = () => {
+  letterElementRows![attempt][5].classList.remove("hidden");
+  letterElementRows![attempt][6].classList.remove("hidden");
+  wordGrid.classList.add("make-room-for-the-goat");
+}
+const removeCrown = () => {
+  letterElementRows![attempt][5].classList.add("hidden");
+  letterElementRows![attempt][6].classList.add("hidden");
+  wordGrid.classList.remove("make-room-for-the-goat");
+}
+
 const onKeyPress = (letter: string) => {
-  if (word.length < config.wordSize) {
+  if (word.length < config.wordSize || (letter == "N" && word.join("") == "LEBRO")) {
     letterElementRows![attempt][word.length].innerHTML = letter;
     word.push(letter);
   }
-  if (word.join("") == "LEBRO") {
+  const joinedWord = word.join("");
+  if (joinedWord == "LEBRO" || joinedWord == "LEBRON") {
+    addCrown();
+  } else {
+    removeCrown();
   }
 }
 
@@ -40,7 +55,9 @@ const onSubmit = () => {
   } else if (attempt === config.attempts - 1) {
     resultDisplay.innerHTML = loserStrings[Math.round(Math.random() * loserStrings.length) % loserStrings.length];
   } else {
+    removeCrown();
     attempt++;
+    word = [];
   }
 }
 
@@ -49,7 +66,7 @@ const onBackspace = () => {
     word.pop();
     letterElementRows![attempt][word.length].innerHTML = "";
   }
-
+  removeCrown();
 }
 
 body.onload = () => {
