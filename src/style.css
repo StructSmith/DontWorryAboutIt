@@ -13,6 +13,9 @@
   --keyboard-color: #000000;
   --keyboard-border: #000000;
   --border: #000000;
+  --result-wrong: #000000;
+  --result-correct: #6aaa64;
+  --result-partial: #c8b558;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -34,6 +37,7 @@ body {
 }
 
 h1 {
+  display: none;
   font-size: 3rem;
   margin: 0px 1rem;
   color: var(--accent-yellow);
@@ -131,7 +135,7 @@ h1 {
   padding: 0;
   margin: 0;
   margin-right: 8px;
-  height: 58px;
+  height: 38px;
   /* border: 1px solid var(--keyboard-border); */
   border-radius: 4px;
   background-color: var(--keyboard-background);
@@ -158,10 +162,10 @@ h1 {
 }
 
 #result-display {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: var(--accent-yellow);
-  margin-top: -10px;
+  margin-top: 10px;
 }
 
 .make-room-for-the-goat {
@@ -178,25 +182,47 @@ h1 {
   white-space: nowrap;
 }
 
+.result-correct {
+  background-color: var(--result-correct);
+}
+
+.result-correct {
+  background-color: var(--result-correct);
+  border: 2px solid var(--result-correct);
+  box-sizing: border-box;
+}
+
+.result-incorrect {
+  background-color: var(--result-wrong);
+  border: 2px solid var(--result-wrong);
+  box-sizing: border-box;
+}
+
+.result-partial {
+  background-color: var(--result-partial);
+  border: 2px solid var(--result-partial);
+  box-sizing: border-box;
+}
+
 .flying-text.horizontal {
-  animation: screenScrollHorizontal 1.25s linear;
+  animation: screenScrollHorizontal 1.6s linear;
 }
 
 .flying-text.vertical {
-  animation: screenScrollVertical 1.25s linear;
+  animation: screenScrollVertical 1.6s linear;
 }
 
 .flying-text.diagonal1 {
-  animation: screenScrollDiagonal1 1.25s linear;
+  animation: screenScrollDiagonal1 1.6s linear;
 }
 
 .flying-text.diagonal2 {
-  animation: screenScrollDiagonal2 1.25s linear;
+  animation: screenScrollDiagonal2 1.6s linear;
 }
 
 @keyframes screenScrollHorizontal {
   0% {
-    transform: translateX(-50%);
+    transform: translateX(0%);
   }
 
   100% {
@@ -206,7 +232,7 @@ h1 {
 
 @keyframes screenScrollVertical {
   0% {
-    transform: translateY(-50%);
+    transform: translateY(0%);
   }
 
   100% {
@@ -235,3 +261,21 @@ h1 {
 }
 
 @media (prefers-color-scheme: light) {}
+
+@media (min-height: 780px) {
+  h1 {
+    display: inline-block;
+  }
+
+  #result-display {
+    margin-top: -10px;
+  }
+
+  .keyboard-key {
+    height: 58px;
+  }
+
+  #app {
+    max-height: 850px;
+  }
+}

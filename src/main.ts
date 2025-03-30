@@ -7,19 +7,47 @@ const body = document.getElementsByTagName("body")[0]!;
 const resultDisplay = document.getElementById("result-display")!;
 const wordGrid = document.getElementById("word-grid")!;
 const keyboard = document.getElementById("keyboard-keys")!;
+const wordAnswer = "LEBRON";
 import './style.css'
 import './crown.css'
 import glazeFlyers from './glazeFlyers';
+import { setSovled, setWon, solved, won } from './persistance';
 let letterElementRows: HTMLDivElement[][] | undefined = undefined;
 let attempt = 0;
 let word: string[] = [];
+
+const handleHints = () => {
+  const wordLenth = word.length;
+  for (let i = 0; i < wordLenth; i++) {
+    const letter = word[i];
+    const indexOfLetter = wordAnswer.indexOf(letter);
+    if (indexOfLetter != -1) {
+      if (indexOfLetter == i) {
+        letterElementRows![attempt][i].classList.add("result-correct");
+      } else {
+        letterElementRows![attempt][i].classList.add("result-partial");
+      }
+    } else {
+      letterElementRows![attempt][i].classList.add("result-incorrect");
+    }
+  }
+}
 
 const onWin = () => {
   for (let i = 0; i < 5; i++) {
     setTimeout(() => {
       const flyer = glazeFlyers(body);
-      setTimeout(() => body.removeChild(flyer), 1200);
+      setTimeout(() => body.removeChild(flyer), 1500);
     }, i * 400);
+  }
+  for (let i = 0, l = word.length; i < l; i++) {
+    letterElementRows![attempt][i].classList.remove("result-partial");
+    letterElementRows![attempt][i].classList.remove("result-incorrect");
+    letterElementRows![attempt][i].classList.add("result-correct");
+  }
+  setWon(true);
+  if (!solved()) {
+    setSovled(true);
   }
 }
 
@@ -35,6 +63,7 @@ const removeCrown = () => {
 }
 
 const onKeyPress = (letter: string) => {
+  if (won()) return;
   if (word.length < config.wordSize || (letter == "N" && word.join("") == "LEBRO")) {
     letterElementRows![attempt][word.length].innerHTML = letter;
     word.push(letter);
@@ -48,13 +77,17 @@ const onKeyPress = (letter: string) => {
 }
 
 const onSubmit = () => {
+  if (won()) return;
   const wordString = word.join("");
-  if (winningWords.has(wordString)) {
-    resultDisplay.innerHTML = winningWords.get(wordString)!;
+  if (wordString == wordAnswer || (solved() && winningWords.has(wordString))) {
+    handleHints();
+    const winningSentences = winningWords.get(wordString)!;
+    resultDisplay.innerHTML = winningSentences[Math.round(Math.random() * winningSentences.length) % winningSentences.length];
     onWin();
   } else if (attempt === config.attempts - 1) {
     resultDisplay.innerHTML = loserStrings[Math.round(Math.random() * loserStrings.length) % loserStrings.length];
   } else {
+    handleHints();
     removeCrown();
     attempt++;
     word = [];
@@ -62,6 +95,7 @@ const onSubmit = () => {
 }
 
 const onBackspace = () => {
+  if (won()) return;
   if (word.length > 0) {
     word.pop();
     letterElementRows![attempt][word.length].innerHTML = "";

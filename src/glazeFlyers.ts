@@ -20,7 +20,7 @@ const setRandomFlyDirection = (flyer: HTMLDivElement) => {
 			flyer.classList.add("vertical");
 			const boundingRect = flyer.getBoundingClientRect();
 			flyer.style.left = (window.innerWidth / 2 - boundingRect.width / 2) + "px";
-			flyer.style.top = -boundingRect.height + "px";
+			flyer.style.top = -boundingRect.height / 2 + "px";
 			break;
 		}
 		case 2: {
