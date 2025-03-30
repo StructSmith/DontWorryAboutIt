@@ -49,7 +49,7 @@ h1 {
   width: 100%;
   margin: 0 auto;
   text-align: center;
-  height: 100vh;
+  height: 90vh;
   /* max-height: calc(100vh - 250px); */
   display: flex;
   flex-direction: column;
